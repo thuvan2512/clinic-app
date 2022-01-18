@@ -1,0 +1,39 @@
+{% extends "base/base.html" %}
+{%block header%}
+<div class="jumbotron text-center" style="margin-bottom: 0">
+  <h1 class="ten-phong-kham">Phòng Khám Đa Khoa OU-Clinic</h1>
+  <p>Tận Tâm - Uy Tín - Trách Nhiệm</p>
+</div>
+{% endblock %}
+{% block details%}
+{% if error_ms %}
+<div class="alert alert-danger" style="position: absolute; height: 50px ">
+    {{ error_ms }}
+</div>
+{% endif %}
+<br><br>
+<h2 class="text-center text-info" style="margin-bottom:  40px;color: #2b6edd;font-weight: bold;"> Đăng Nhập</h2>
+<form method="post" action="{{ url_for('employee_login') }}" style="width: 40%; margin: 0 auto;">
+    <div class="form-group">
+       <label for="username">Tên Đăng Nhập</label>
+       <input type="text" name="username" class="form-control"
+              id="username" placeholder="Nhap username..." required />
+   </div>
+    <div class="form-group">
+       <label for="password">Mật Khẩu</label>
+       <input type="password"
+              name="password"
+              class="form-control"
+              id="password"
+              placeholder="Nhap mat khau..." required />
+   </div>
+    <div style="display:flex;justify-content:center;align-items:center;">
+      <input type="submit" value="Đăng Nhập" class="btn-submit" />
+    </div>
+</form>
+<br><br>
+
+{%endblock%}
+{% block TitlePage %}
+<title>Đăng nhập</title>
+{% endblock %}

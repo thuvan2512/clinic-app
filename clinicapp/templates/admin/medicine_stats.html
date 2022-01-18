@@ -1,0 +1,96 @@
+{% extends 'admin/base.html' %}
+
+{% block title %} Trang admin {% endblock %}
+
+{% block body %}
+    {% if current_user.is_authenticated %}
+        <h1 style="text-align:center;">Thống kê tần suất sử dụng thuốc</h1>
+        <div style="text-align:center;">
+            <form method="get">
+                <input type="month" name="month" value="{{ request.args.get('month') if request.args.get('month')
+                else [last_m_y.get('year'), last_m_y.get('month')]|join('-')}}">
+                <input type="submit">
+            </form>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <table class="table">
+                    <tr class="col-md-6 col-xs-12">
+                        <th>Thuốc</th>
+                        <th>Đơn vị tính</th>
+                        <th>Số lượng</th>
+                        <th>Số lần dùng</th>
+                    </tr>
+                    {% if stats %}
+                        {% for s in stats %}
+                        <tr class="col-md-6 col-xs-12">
+                            <td>{{s[0]}}</td>
+                            <td>{{s[1]}}</td>
+                            <td>{{s[2]}}</td>
+                            <td>{{s[3]}}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                </table>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <canvas id="myCategoryStatChart"></canvas>
+            </div>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        window.onload = function() {
+            let labels = [], data = []
+            temp = ""
+            {% if stats %}
+                {% for s in stats %}
+                    temp = '{{s[0] + '-' + s[1]}}'
+                    labels.push(temp)
+                    data.push({{s[2]}})
+                {% endfor %}
+            {% else %}
+                alert("Không tìm thấy dữ liệu")
+            {% endif %}
+
+            const ctx = document.getElementById('myCategoryStatChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Thong ke so luong tung loai thuoc',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+    {% else %}
+        {% include 'admin/login.html' %}
+    {% endif %}
+{% endblock %}

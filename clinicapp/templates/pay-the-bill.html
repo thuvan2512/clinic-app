@@ -1,0 +1,57 @@
+{% extends "nurse-view.html" %}
+{% block details%}
+<br>
+<div class="thanh-toan-hoa-don">
+    <h1 style="margin-bottom: 20px;color: #2b6edd;font-weight: bold;">Thanh Toán Hóa Đơn</h1>
+    <form method="get">
+        <input type="date" name="date" value="{{ request.args.get('date') if request.args.get('date')}}">
+        <input type="submit" class="btn-submit" style="margin-right: 10px; border-radius: 5px; padding: 0 5px;">
+    </form>
+    <br><br>
+    <table id="table-thanh-toan-hoa-don">
+        <tr>
+            <th>Ngày khám</th>
+            <th>Họ và tên</th>
+            <th>Ngày sinh</th>
+            <th>Giá trị</th>
+            <th>Thanh toán</th>
+        </tr>
+        {% if bill %}
+            {% for b in bill %}
+            <tr>
+                <td>{{b[0]}}</td>
+                <td>{{[b[1], b[2]]|join(' ')}}</td>
+                <td>{{b[3]}}</td>
+                <td>{{'{:,.0f}'.format(b[4])}} VND</td>
+                <td>
+                    {% if b[5] == True %}
+                    <button class="pay-the-bill_paid" disabled >Đã thanh toán</button>
+                    {% else %}
+
+                    <button class="pay-the-bill_unpaid" onclick="location.href='{{ url_for('detail_pay_the_bill', bill_id=b[6])}}'">Thanh toán</button>
+
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+</div>
+<br>
+
+<!--<script>-->
+<!--    const elements = document.querySelectorAll('.pay-the-bill_unpaid');-->
+<!--    elements.forEach(element => {-->
+<!--        element.addEventListener('click',()=>{-->
+<!--            element.classList.add("pay-the-bill_paid");-->
+<!--            element.classList.remove("pay-the-bill_unpaid");-->
+<!--            element.innerHTML = "Đã thanh toán";-->
+<!--            element.disabled = true;-->
+<!--        })-->
+<!--    })-->
+<!--</script>-->
+<script src="{{url_for('static', filename='js/script.js')}}"></script>
+{%endblock%}
+{% block TitlePage %}
+<title>Thanh toán</title>
+{% endblock %}

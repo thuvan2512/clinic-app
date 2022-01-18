@@ -1,0 +1,50 @@
+{% extends "doctor-view.html" %}
+{% block details%}
+<br>
+<div class="thanh-toan-hoa-don">
+    <h1 style="margin-bottom: 20px;color: #2b6edd;font-weight: bold;">Danh sách khám bệnh</h1>
+    <form method="get">
+        <input type="date" name="date" value="{{ request.args.get('date') if request.args.get('date')
+                else [last_date.get('year'), last_date.get('month'), last_date.get('day')]|join('-')}}">
+        <input type="submit" class="btn-submit" style="margin-right: 10px; border-radius: 5px; padding: 0 5px;" value="Gửi">
+    </form>
+    <br><br>
+    <table id="table-thanh-toan-hoa-don">
+        <tr>
+            <th>Ngày khám</th>
+            <th>Họ và tên</th>
+            <th>Giới tính</th>
+            <th>Lập phiếu khám</th>
+        </tr>
+        {% if pati %}
+        {% for p in pati %}
+        <tr>
+            <td>{{p[0]}}</td>
+            <td>{{[p[1], p[2]]|join(' ')}}</td>
+            {% if p[3].value == 1 %}
+            <td>Nam</td>
+            {%elif p[3].value == 2 %}
+            <td>Nữ</td>
+            {%else%}
+            <td>Không muốn trả lời</td>
+            {%endif %}
+            <td>
+                {% if p[9] == True %}
+                <button class="pay-the-bill_paid">Đã Lập</button>
+                {% else %}
+                <button class="pay-the-bill_unpaid" onclick="location.href='{{ url_for('detail_make_a_medical_bill',
+                     patient_id=p[6], date=p[0])}}'">Lập phiếu
+                </button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+
+</div>
+<br>
+{%endblock%}
+{% block TitlePage %}
+<title>Lập phiếu khám</title>
+{% endblock %}

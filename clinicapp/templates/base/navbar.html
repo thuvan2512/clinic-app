@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-sm fixed-top">
+    <!-- Brand -->
+    <img width="40px" style="margin: 0px 20px" src="{{url_for('static', filename = 'images/logo1.png')}}">
+    <!-- Links -->
+    <ul class="navbar-nav">
+        {%if not current_user.is_authenticated%}
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('homepage')}}"><i class="fas fa-home"></i></i>   Trang Chủ </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#about-us" ><i class="fas fa-users"></i>
+                 Về Chúng Tôi
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('homepage')}}#nav-dang-ki-homepage"><i class="fas fa-file-signature"></i> Đăng Ký Khám Bệnh </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{url_for('homepage')}}#nav-phan-hoi"><i class="fas fa-comments"></i> Phản Hồi </a>
+        </li>
+        {%endif%}
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('homepage')}}"><i class="fas fa-undo"></i> Trở Lại Trang Nghiệp Vụ </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('user_logout') }}"><i class="fas fa-sign-out-alt"></i> Đăng Xuất </a>
+        </li>
+        {%else%}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('employee_login')}}"><i class="fas fa-sign-in-alt"></i> Đăng Nhập </a>
+        </li>
+        {%endif%}
+    </ul>
+    {% if current_user.is_authenticated %}
+    <div class="avatar-user">
+        <a class="nav-link" href="{{ url_for('homepage')}}" title="{{current_user.name}}">
+            {% if current_user.avatar %}
+            <img class="rounded-circle" src="{{current_user.avatar}}" width="30px">
+            {%else%}
+            <img class="rounded-circle" src="{{ url_for('static', filename = 'images/dfavt.jpg')}}" width="30px">
+            {%endif%}
+        </a>
+    </div>
+    {%endif%}
+
+</nav>

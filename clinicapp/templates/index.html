@@ -1,0 +1,127 @@
+{% extends "base/base.html" %}
+{%block header%}
+<div class="jumbotron text-center" style="margin-bottom: 0">
+    <h1 class="ten-phong-kham">Phòng Khám Đa Khoa OU-Clinic</h1>
+    <p>Tận Tâm - Uy Tín - Trách Nhiệm</p>
+</div>
+{% endblock %}
+{% block details %}
+<div>
+    <div id="demo" class="carousel slide" data-ride="carousel">
+
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" class="active" style="background-color: #2b6edd "></li>
+            <li data-target="#demo" data-slide-to="1" style="background-color: #2b6edd"></li>
+        </ul>
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{url_for('static', filename = 'images/banner1.jpg')}}" alt="banner1">
+                <div class="carousel-caption" style="color: black">
+                    <h3 style="font-weight:bold">DỊCH VỤ Y KHOA UY TÍN</h3>
+                    <p>Với phương châm "Tận Tâm – Uy Tín – Trách Nhiệm", Phòng Khám Đa Khoa OU-Clinic chắc chắn sẽ trở
+                        thành địa chỉ chăm
+                        sóc sức khỏe tin cậy của người dân Tp. Hồ Chí Minh & các tỉnh thành khác.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{{url_for('static', filename = 'images/banner2.jpg')}}" alt="banner2">
+                <div class="carousel-caption" style="color: black">
+                    <h3 style="font-weight:bold">ĐỘI NGŨ Y BÁC SĨ GIÀU KINH NGHIỆM</h3>
+                    <p>Sự khắc khe trong quy trình điều trị & tôn trọng quyền bệnh nhân là
+                        quan điểm cốt lõi để đội ngũ bác sỹ của chúng tôi nỗ lực hết mình trong việc chăm sóc sức khỏe
+                        của bạn</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+
+    </div>
+</div>
+<!-- Ve chung toi -->
+<div id="about-us" class="ve-chung-toi">
+    <h1 style="color:#2b6edd; font-weight:bold">Đội Ngũ Y Bác Sĩ Giàu Kinh Nghiệm</h1>
+    <br>
+    <div class="ve-chung-toi-picture">
+        <div class="about-us">
+            <div class="about-us-1">
+                <img src="{{url_for('static', filename = 'images/doctor-01.jpg')}}">
+                <p style="font-size: 19px;font-weight:500;" class="doctor-name">Bác sĩ Ryan</p>
+                <span class="about-us-2">
+                    <h4>Bác sĩ Ryan</h4>
+                    <h6>Chức vụ: Trưởng khoa</h6>
+                    <p class="about-us-p">Bác sĩ Ryan hoàn thành bằng chứng nhận bác sĩ Trị liệu thần kinh cột sống ở bang Massachusetts, USA</p>
+                </span>
+            </div>
+        </div>
+        <div>
+            <div class="about-us-1">
+                <img src="{{url_for('static', filename = 'images/doctor-02.jpg')}}">
+                <p style="font-size: 19px;font-weight:500;" class="doctor-name">Bác sĩ Anna</p>
+                <span class="about-us-2">
+                    <h4>Bác sĩ Anna</h4>
+                    <h6>Chức vụ: Phó khoa</h6>
+                    <p class="about-us-p">Bác sĩ Anna đã có kinh nghiệm thực hành tại các phòng khám chuyên khoa ở Ý (Pont-Saint-Martin, Aosta, Torino).</p>
+                </span>
+            </div>
+        </div>
+        <div>
+            <div class="about-us-1">
+                <img src="{{url_for('static', filename = 'images/doctor-03.jpg')}}">
+                <p style="font-size: 19px; font-weight:500;" class="doctor-name">Bác sĩ George</p>
+                <span class="about-us-2">
+                    <h4>Bác sĩ George</h4>
+                    <h6>Chức vụ: Tiến sĩ y khoa</h6>
+                    <p class="about-us-p">Bác sĩ George vinh dự được cấp bằng bởi Đại học Life University ở Marietta, Georgia, Mỹ.</p>
+                </span>
+            </div>
+        </div>
+        <div>
+            <div class="about-us-1">
+                <img src="{{url_for('static', filename = 'images/nurse-01.jpg')}}">
+                <p style="font-size: 19px; font-weight:500;" class="doctor-name">Y tá Jane</p>
+                <span class="about-us-2">
+                    <h4>Y tá Jane</h4>
+                    <h6>Chức vụ: Y tá</h6>
+                    <p class="about-us-p">Y tá Jane là người tham gia rất nhiều hoạt động từ thiện vì cộng đồng ở các nước kém phát triển như Haiti, Jamaica và Cộng Hòa Dominica.</p>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a class="button-go-to-top" onclick="topFunction()">
+    <i class="fas fa-angle-double-up"></i>
+</a>
+<script>
+    window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+      if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
+        document.querySelector(".button-go-to-top").style.display = "block";
+      } else {
+        document.querySelector(".button-go-to-top").style.display = "none";
+      }
+    }
+    function topFunction() {
+      document.documentElement.scrollTop = 0;
+    }
+</script>
+{%endblock%}
+<!-- Dang ky kham benh -->
+{% block medical_register%}
+    <div id="nav-dang-ki-homepage"></div>
+  {% include "base/medical_register_base.html"%}
+{%endblock%}
+{% block comment%}
+<div id="nav-phan-hoi"></div>
+    {% include "comment.html"%}
+{%endblock%}

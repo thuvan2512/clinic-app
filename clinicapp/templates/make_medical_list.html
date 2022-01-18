@@ -1,0 +1,65 @@
+{% extends "nurse-view.html" %}
+{% block details%}
+<!--    Lập danh sách khám-->
+<br>
+<div class="lap-danh-sach-kham">
+    <h1 style="margin-bottom: 20px;color: #2b6edd;font-weight: bold;">Lập Danh Sách Khám</h1>
+    <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 40px;">
+        <form method="get">
+            <input type="date" name="date" value="{{ request.args.get('date') if request.args.get('date')
+                else [last_date.get('year'), last_date.get('month'), last_date.get('day')]|join('-')}}">
+            <input class="btn-submit" type="submit" style="margin-right: 10px; border-radius: 5px; padding: 0 5px;">
+        </form>
+        {% if status == True %}
+            <div style="border: 2px solid green; border-radius: 6px; padding: 0 10px 0 10px; color: Green;">
+                Đã lập
+            </div>
+        {% else %}
+            <div style="border: 2px solid red; border-radius: 6px; padding: 0 10px 0 10px; color: Red;">
+                Chưa lập
+            </div>
+        {% endif %}
+    </div>
+    <br>
+    <table id="table-lap-danh-sach-kham">
+        <tr>
+            <th>Họ và tên</th>
+            <th>Giới tính</th>
+            <th>Ngày sinh</th>
+            <th>Số điện thoại</th>
+        </tr>
+        {% if med_list %}
+            {% for ml in med_list %}
+                <tr>
+                    <td>{{[ml[1], ml[2]]|join(' ')}}</td>
+                    {% if ml[3].value == 1 %}
+                            <td>Nam</td>
+                    {%elif ml[3].value == 2 %}
+                            <td>Nữ</td>
+                    {%else%}
+                            <td>Không muốn trả lời</td>
+                    {%endif %}
+                    <td>{{ml[4]}}</td>
+                    <td>{{ml[5]}}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+    {% if status == False %}
+        {% if med_list %}
+        <div class="lap-danh-sach-kham-button">
+            <button class="btn-submit" onclick="make_medical_list({{med_list[0][7]}})">Lập danh sách khám</button>
+        </div>
+        {% else %}
+            <h4>Chưa có bệnh nhân đăng ký</h4>
+        {% endif %}
+    {% endif %}
+    <div style="color: red; font-style: italic;">*hệ thống sẽ gửi thông báo lịch khám quá SMS đến khách hàng
+    </div>
+</div>
+<br>
+<script src="{{url_for('static', filename='js/script.js')}}"></script>
+{%endblock%}
+{% block TitlePage %}
+<title>Lập danh sách khám</title>
+{% endblock %}

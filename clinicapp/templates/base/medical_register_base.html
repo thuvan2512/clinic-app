@@ -1,0 +1,48 @@
+<br><br>
+<form method="post" class="dang-ky-kham-benh-y-ta">
+    <h1 style="color: #2b6edd;font-weight: bold;">Đăng Ký Khám Bệnh</h1>
+    <table id="table-1" style="margin: auto;width:88%">
+        <tr>
+            <td>Số điện thoại (Phone number):</td>
+            <td>
+                <input required type="tel" onfocus="fix_loop()" autocomplete = "off" name="phone_number" onblur="get_phone_number(this)" id="phone_number">
+            </td>
+        </tr>
+        <tr>
+            <td>Họ (Last name):</td>
+            <td>
+                <input required autocomplete="off" disabled type="text" id="last_name">
+            </td>
+            <td>Tên (First name):</td>
+            <td>
+                <input required autocomplete="off" disabled type="text" id="first_name">
+            </td>
+        </tr>
+        <tr>
+            <td>Giới tính (Sex):</td>
+            <td>
+                <select disabled id="sex" style="border: solid 2px; border-radius: 3px">
+                    <option  value="1">Nam (Male)</option>
+                    <option value="2">Nữ (Female)</option>
+                    <option selected value="3">Không muốn trả lời (Unknow)</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Ngày sinh (Date of birth):</td>
+            <td>
+                <input max="{{date_now}}" required disabled type="date"  id="date_of_birth">
+            </td>
+            <td>Ngày khám (Date of examination):</td>
+            <td>
+                <input min="{{date_now}}"  required disabled type="date" value="{{date_now}}" id="date_of_exam">
+            </td>
+        </tr>
+    </table>
+    <div style="display: flex; justify-content: center; align-item: center;">
+    </div>
+    <div id="button">
+        <input type="submit" id="button_submit" disabled style="padding: 5px 20px; border-radius: 5px; color: white;" onclick="api_medical_register()" value="Đăng ký"></input>
+        <div style="color: red; font-style: italic;">*hệ thống sẽ gửi thông báo lịch khám quá SMS đến khách hàng</div>
+    </div>
+</form>

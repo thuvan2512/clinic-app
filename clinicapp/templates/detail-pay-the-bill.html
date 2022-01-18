@@ -1,0 +1,71 @@
+{% extends "nurse-view.html" %}
+{% block details%}
+<br>
+    <!--    Chi tiết thanh toán hóa đơn-->
+    <div class="chi-tiet-thanh-toan-hoa-don">
+        <h1 style="text-align: center;color: #2b6edd;font-weight: bold;">Chi tiết thanh toán hóa đơn</h1>
+        <table id="talbe1-chi-tiet-thanh-toan-hoa-don">
+          <tr>
+            <td style="font-weight: 600;">Mã hóa đơn</td>
+              {% if bill %}
+                <td>{{bill[0]}}</td>
+              {% endif %}
+              <td style="padding-left: 40px; font-weight: 600;">Tổng hóa đơn:</td>
+                {% if bill %}
+                    <td style="border: 1px solid black; border-radius: 10px; text-align: center;"> {{'{:,.0f}'.format(bill[1])}} VNĐ </td>
+              {% endif %}
+          </tr>
+          <tr>
+            <td style="font-weight: 600;">Tên khách hàng:</td>
+              {% if bill %}
+                <td>{{[bill[2], bill[3]]|join(' ')}}</td>
+              {% endif %}
+
+            <td style="padding-left: 40px; font-weight: 600;">Ngày sinh</td>
+            {% if bill %}
+                <td>{{bill[5]}}</td>
+              {% endif %}
+          </tr>
+          <tr>
+            <td style="font-weight: 600;">SĐT:</td>
+            {% if bill %}
+                <td>{{bill[4]}}</td>
+              {% endif %}
+            <td style="padding-left: 40px; font-weight: 600;">Ngày khám:</td>
+            {% if bill %}
+                <td>{{bill[6]}}</td>
+              {% endif %}
+          </tr>
+        </table>
+
+        <div class="chi-tiet-thanh-toan-hoa-don-button">
+
+            {% if bill and bill[7] == False %}
+                <button class="btn-thanh-toan" onclick="pay_the_bill({{bill[0]}})">Thanh toán tại quầy</button>
+                <button class="btn-thanh-toan" id="btn-thanh-toan-momo" onclick="get_pay_url_momo({{bill[0]}}, {{bill[1]}}, window.location.href)">Thanh toán qua MoMo</button>
+            {% endif %}
+        </div>
+        <div class="popup_detail-pay-the-bill">
+            <p class="title_popup_detail-pay-the-bill">Thành công</p>
+            <button class="button_popup_detail-pay-the-bill-thanh_toan" onclick="location.href='{{ url_for('pay_the_bill')}}'">Xác nhận<br>(Trở về danh sách)</button>
+        </div>
+    </div>
+<script src="{{url_for('static', filename='js/script.js')}}"></script>
+<script>
+    window.onload = function() {
+        try {
+            var url = new URL(window.location.href);
+            var result = url.searchParams.get("resultCode")
+            if (result == "0") {
+                pay_the_bill({{bill[0]}})
+            }
+        } catch(err) {
+            console.log(err)
+        }
+
+    }
+</script>
+{%endblock%}
+{% block TitlePage %}
+<title>Chi tiết thanh toán</title>
+{% endblock %}

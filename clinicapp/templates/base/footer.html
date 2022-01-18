@@ -1,0 +1,81 @@
+    <footer>
+        <div id="contact" class="allfoot">
+            <div class="col30">
+                <h4 style="font-weight:bold;color:#2b6edd;font-size:28px;">Liên Hệ Với Chúng Tôi</h4>
+                <ul class="contact">
+                    <li><i class="fa fa-university"></i> Ho Chi Minh City Open University</li>
+                    <li><i class="fa fa-phone"></i> Hotline: 0877158491</li>
+                    <li><i class="fa fa-envelope"></i> Email: Clinic@ou.edu.vn</li>
+                </ul>
+            </div>
+            <div class="col30">
+                <h4 style="font-weight:bold;color:#2b6edd;font-size:28px">Phản Hồi</h4>
+                <input placeholder="Tên của bạn" required autocomplete="off" type="text" id="name-of-patient-comment">
+                <textarea placeholder="Nội dung.." id="content-of-comment"></textarea>
+                <div class="star-comment">
+                    <div id="rating">
+                        <input type="radio" id="star5" name="rating" value="5" />
+                        <label for="star5" title="Awesome - 5 stars"></label>
+
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label for="star4" title="Pretty good - 4 stars"></label>
+
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label for="star3" title="Meh - 3 stars"></label>
+
+                        <input type="radio" id="star2" name="rating" value="2" />
+                        <label for="star2" title="Kinda bad - 2 stars"></label>
+
+                        <input type="radio" id="star1" name="rating" value="1" />
+                        <label for="star1" title="Sucks big time - 1 star"></label>
+                    </div>
+                </div>
+                {% if not current_user.is_authenticated %}
+                    <input type="submit" style="border:none" onclick="addComment()" disabled id="button_comment" value="Gửi"/>
+                {% endif %}
+            </div>
+            <div class="col50">
+                <p><span style="font-weight:bold;color:#2b6edd;font-size:28px">Phòng khám đa khoa OU-Clinic</span> <br>Luôn luôn lắng nghe thấu hiểu khách hàng,<br> nỗ lực không ngừng để nâng
+                    cao chất lượng dịch vụ của mình.<br>Đến với
+                    chúng tôi để nhận những tư vấn ngay
+                    nhé !</p>
+                <div class="fb">
+                    <ul class="social" style="margin-left: 25%">
+                            <li><a title="facebook" target="_blank"
+                               href="https://www.facebook.com/vtn25dec/"><img
+                                src="{{url_for('static', filename = 'images/logofb.png')}}"/></a></li>
+                        <li><a title="instagram" target="_blank" href="https://www.instagram.com/"><img
+                                src="{{url_for('static', filename = 'images/logoig.png')}}"/></a></li>
+                        <li><a title="pinterest" target="_blank"
+                               href="https://www.pinterest.com/search/pins/?q=vietnam%20travel&rs=typed&term_meta[]=vietnam%7Ctyped&term_meta[]=travel%7Ctyped"><img
+                                src="{{url_for('static', filename = 'images/logopt.png')}}"/></a></li>
+                        <li><a title="github" target="_blank" href="https://github.com/thuvan2512"><img
+                                src="{{url_for('static', filename = 'images/logogh.png')}}"/></a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        let temp_button_rating = 0;
+        document.querySelector("#name-of-patient-comment").addEventListener("change", stateHandle)
+        document.querySelector("#content-of-comment").addEventListener("change", stateHandle)
+        document.querySelectorAll('input[name="rating"]').forEach(el =>{
+            el.addEventListener("change", flag_temp_button)
+        })
+        function flag_temp_button(){
+            if(document.querySelector('input[name="rating"]:checked').value != 0){
+                temp_button_rating = 1;
+                stateHandle();
+            }
+        }
+        function stateHandle() {
+            console.log(temp_button_rating)
+          if (document.querySelector("#name-of-patient-comment").value === "" || document.querySelector("#content-of-comment").value === "" || temp_button_rating === 0){
+            document.getElementById("button_comment").disabled = true
+          } else {
+            document.getElementById("button_comment").disabled = false
+          }
+        }
+    </script>

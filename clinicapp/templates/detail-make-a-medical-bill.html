@@ -1,0 +1,90 @@
+{% extends "doctor-view.html" %}
+{% block details%}
+<br>
+<!--    Chi tiết phiếu khám-->
+<div class="chi-tiet-thanh-toan-hoa-don" id="chi-tiet-phieu-kham">
+    <h1 style="text-align: center;color: #2b6edd;font-weight: bold;">Lập phiếu khám</h1>
+    {% if patient %}
+    <table id="talbe1-chi-tiet-thanh-toan-hoa-don">
+        <tr>
+            <td style="font-weight: 600;">Tên khách hàng:</td>
+            <td>{{[patient.last_name, patient.first_name]|join(' ')}}</td>
+            <td style="padding-left: 40px; font-weight: 600;">Ngày sinh:</td>
+            <td>{{patient.date_of_birth}}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: 600;">SĐT:</td>
+            <td>{{patient.phone_number}}</td>
+            <td style="padding-left: 40px; font-weight: 600;">Ngày khám:</td>
+            <td>{{date}}</td>
+        </tr>
+        <tr>
+            <td style="font-weight: 600;" class="top-left">Chẩn đoán</td>
+            <td><textarea id="diagnosis"></textarea></td>
+            <td style="padding-left: 40px; font-weight: 600;" class="top-left">Triệu chứng</td>
+            <td><textarea id="symptom"></textarea></td>
+        </tr>
+    </table>
+    <br>
+    <h3 class="text-ke-don">Bảng kê đơn thuốc</h3>
+    <br>
+    {% endif %}
+    <table id="talbe2-chi-tiet-thanh-toan-hoa-don">
+        <tr>
+            <th>STT</th>
+            <th>Thuốc</th>
+            <th>Đơn vị</th>
+            <th>Số lượng</th>
+            <th>Cách dùng</th>
+            <th>Xóa</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>
+                <select id="med-1" class="medicine" size="1">
+                    <option value="" selected="selected">Select medicine</option>
+                </select>
+            </td>
+            <td>
+                <select class="medicine-unit-id" id="med-unit-1" size="1">
+                    <option value="" selected="selected">Please select medicine first</option>
+                </select>
+            </td>
+            <td><input type="number" min="0" max="0" value="0" class="quantity" id="quantity-1" placeholder="Số lượng"></td>
+            <td><input type="text" class="use"></td>
+            <td><input type="button" class="deleteDep" disabled id="1" value="Xóa"/></td>
+        </tr>
+    </table>
+    <button style="padding: 0 20px;" class="button button_add_row_detail btn-submit" onclick="add_row_for_med_bill()">+</button>
+    <br><br>
+    <button class="button_popup_detail_make_a_medical_bill btn-submit" onclick="create_medical_bill({{current_user.id}},{{patient.id}}, '{{date}}')">Lập phiếu khám</button>
+    <div class="popup_detail-pay-the-bill">
+            <p class="title_popup_detail-pay-the-bill"></p>
+            <button class="button_popup_detail-pay-the-bill-thanh_toan" onclick="location.href='{{ url_for('make_a_medical_bill', date=date)}}'">Trở về danh sách</button>
+
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        get_med_list_json()
+    }
+</script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script>
+    $('body').on('click', 'input.deleteDep', function() {
+       $(this).parents('tr').remove();
+       document.getElementById("med-"+ (sessionStorage.getItem("serial")-1)).value = "";
+       document.getElementById("med-unit-"+ (sessionStorage.getItem("serial")-1)).value = "";
+       document.getElementById("quantity-"+ (sessionStorage.getItem("serial")-1)).value = "0";
+       document.getElementById("quantity-"+ (sessionStorage.getItem("serial")-1)).min = "0";
+       document.getElementById("quantity-"+ (sessionStorage.getItem("serial")-1)).max = "0";
+       update_med_unit_exist();
+       temp("med-"+ (sessionStorage.getItem("serial")-1), "med-unit-" + (sessionStorage.getItem("serial")-1), "quantity-" + (sessionStorage.getItem("serial")-1))
+    });
+
+</script>
+<br>
+{%endblock%}
+{% block TitlePage %}
+<title>Chi tiết phiếu khám</title>
+{% endblock %}

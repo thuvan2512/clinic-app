@@ -1,0 +1,104 @@
+{% extends "base/base.html" %}
+{%block header%}
+<div class="jumbotron text-center" style="margin-bottom: 0">
+    <h1 class="ten-phong-kham">Phòng Khám Đa Khoa OU-Clinic</h1>
+    <h3>Nghiệp Vụ Bác Sĩ</h3>
+</div>
+{% endblock %}
+{% block nav%}
+<nav class="navbar navbar-expand-sm fixed-top">
+    <!-- Brand -->
+    <img width="30px" style="margin-right: 10px" src="{{url_for('static', filename = 'images/logo1.png')}}">
+    <!-- Links -->
+    <ul class="navbar-nav">
+        {%if current_user.is_authenticated%}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('homepage')}}">
+                {% if current_user.avatar %}
+                <img class="rounded-circle" src="{{current_user.avatar}}" width="30px">
+                {%else%}
+                <img class="rounded-circle" src="{{ url_for('static', filename = 'images/dfavt.jpg')}}" width="30px">
+                {%endif%}
+                Thông Tin Bác Sĩ
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('make_a_medical_bill')}}"><i class="fas fa-file-signature"></i> Lập
+                Phiếu Khám Bệnh </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('user_logout') }}"><i class="fas fa-sign-out-alt"></i> Đăng Xuất </a>
+        </li>
+        {%endif%}
+    </ul>
+    <div class="avatar-user">
+        <a class="nav-link" href="{{ url_for('homepage')}}" title="{{current_user.name}}">
+            {% if current_user.avatar %}
+            <img class="rounded-circle" src="{{current_user.avatar}}" width="30px">
+            {%else%}
+            <img class="rounded-circle" src="{{ url_for('static', filename = 'images/dfavt.jpg')}}" width="30px">
+            {%endif%}
+        </a>
+    </div>
+
+</nav>
+{% endblock %}
+{%block details%}
+{% if error_ms %}
+{% if error_ms == "Thay đổi thành công!!!" %}
+<div class="alert alert-success" style="position: absolute; height: 50px">
+    <p>{{ error_ms }}</p>
+    <a style="margin-left: 40px;" href="{{url_for('homepage')}}"><button class="btn btn-success">OK</button></a>
+</div>
+{% else %}
+<div class="alert alert-danger" style="position: absolute; height: 50px">
+    <p>{{ error_ms }}</p>
+    <a style="margin-left: 40px;" href="{{url_for('homepage')}}"><button class="btn btn-danger">Thử lại</button></a>
+</div>
+{% endif %}
+{% endif %}
+<div class="thong-tin-y-ta">
+    <br><br>
+    <h1 style="color: #2b6edd;font-weight: bold;">Thông Tin Bác Sĩ</h1>
+    <div>
+        {% if current_user.avatar %}
+        <img style="border-radius: 50%; margin-right: 50px;" class="anh-y-ta img-thumbnail" src="{{current_user.avatar}}">
+        {%else%}
+        <img style="border-radius: 50%; margin-right: 50px;" class="anh-y-ta img-thumbnail" src="{{ url_for('static', filename = 'images/dfavt.jpg')}}">
+        {%endif%}
+        <div class="chi-tiet-y-ta">
+            <table id="table-y-ta">
+                <tr>
+                    <td style="font-weight: bold;">Họ tên:</td>
+                    <td>{{current_user.name}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold;">Giới tính:</td>
+                    <td>{{sex}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold;">Ngày sinh:</td>
+                    <td>{{current_user.date_of_birth}}</td>
+                </tr>
+                <tr>
+                    <td style="font-weight: bold;">Email:</td>
+                    <td>{{current_user.email}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div style="margin: 5px auto">
+        <button style="margin-top: 40px;" type="button" class="btn-submit" data-toggle="modal" data-target="#myModal">
+            Thay đổi thông tin
+        </button>
+    </div>
+</div>
+<br>
+<!-- Button to Open the Modal -->
+{% block modal%}
+ {% include "base/modal.html"%}
+{% endblock %}
+{%endblock%}
+{% block TitlePage %}
+<title>Nghiệp vụ bác sĩ</title>
+{% endblock %}
