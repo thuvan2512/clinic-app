@@ -1,2 +1,1 @@
-# CNPM
-#0944540746
+## Clinic management app
